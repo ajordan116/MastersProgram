@@ -1,0 +1,45 @@
+---
+title: "Exercise 2.2: Tree Maps, Area Charts, Stacked Area Charts, & Step Charts"
+author: "Andrew Jordan"
+date: '2022-06-28'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE, warning= FALSE, message=FALSE)
+knitr::opts_knit$set(root.dir = 'C:/Users/Andrew/Documents/Grad School/DSC 630 - Predictive Analytics/Assignments')
+knitr::opts_chunk$set(tidy.opts = list(width.cutoff = 60), tidy = TRUE)
+getwd()
+```
+
+```{r}
+library(tidyverse)
+library(magrittr)
+library(dplyr)
+library(ggplot2)
+library(readxl)
+library(treemap)
+world <- read_excel("C:/Users/Andrew/Documents/Grad School/DSC 640 - Presentation & Visualization/Assignments/data/ex2-2/world-population.xlsm")
+expend <- read.table("C:/Users/Andrew/Documents/Grad School/DSC 640 - Presentation & Visualization/Assignments/data/ex2-2/expenditures.txt", sep ='\t', header=TRUE)
+head(world)
+head(expend)
+```
+```{r}
+treemap(expend,index="category",vSize="expenditure", type="index",
+        align.labels=list(
+        c("center", "center"), 
+        c("right", "bottom")
+        ),overlap.labels=.5,
+        inflate.labels=T,
+        title='Expenditure by Category')
+```
+```{r}
+ggplot(world, aes(x=Year, y=Population/1000000000)) + geom_area(fill='red', alpha=.3) + geom_line() + ylab('Population in Billions') + ggtitle("Population by Year")
+```
+```{r}
+ggplot(expend, aes(x=year, y=expenditure, fill=category)) + geom_area() + xlab("Year") + ylab("Expenditure") + ggtitle("Expenditure by Category by Year")
+```
+```{r}
+ggplot(world, aes(x=Year, y=Population/1000000000)) + geom_step(color='red') + ylab("Population in billions") + ggtitle("Population by Year") 
+```
+
