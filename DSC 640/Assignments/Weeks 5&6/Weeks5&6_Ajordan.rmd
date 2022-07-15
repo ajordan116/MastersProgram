@@ -1,0 +1,33 @@
+---
+title: "Weeks 5&6"
+author: "Andrew Jordan"
+date: '2022-07-15'
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+library(ggplot2)
+library(dplyr)
+crime <- read.csv('data/ex4-2/crimerates-by-state-2005.csv')
+```
+
+```{r}
+crime <- crime[-c(1, 10),]
+head(crime)
+```
+
+```{r}
+ggplot(crime, aes(x=murder, y=burglary))+ geom_point(colour='skyblue') + theme_bw() + theme(panel.border = element_blank(), 
+      panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "black")) + xlab("Murders per 100,000") + ylab("Burglaries per 100,000") + ggtitle("Murders v. Burglaries in the U.S., by state") + geom_text(label=crime$state, size=3, hjust=-.1)
+```
+
+```{r}
+ggplot(crime, aes(x=burglary, y=motor_vehicle_theft, size=population))+ geom_point(colour='skyblue') + theme_bw() + theme(panel.border = element_blank(), 
+      panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "grey")) + xlab("Burglaries per 100,000") + ylab("Stolen Vehicles per 100,000 Population") + ggtitle("Robberies vs. Murders in the U.S.") + geom_text(label=crime$state, size=3, hjust=-.1)
+```
+```{r}
+ggplot(crime, aes(x=murder)) + geom_density()+ theme_bw() + theme(panel.border = element_blank(), 
+      panel.grid.major = element_blank(), panel.grid.minor = element_blank(), axis.line = element_line(colour = "grey")) + xlab("Murders") + ylab("Count per 100,000") + ggtitle("Murder per 100,000")
+```
+
